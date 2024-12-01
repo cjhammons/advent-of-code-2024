@@ -6,14 +6,19 @@ use clap::Parser;
 #[command(name = "advent-of-code")]
 #[command(about = "Solutions for Advent of Code")]
 struct Args {
-    #[arg(value_parser = clap::value_parser!(u8).range(1..=25))]
-    day: u8,
+    #[arg(value_parser = clap::value_parser!(u32).range(1..=25))]
+    day: u32,
 }
 
 fn main() {
     let args = Args::parse();
-    match args.day {
-        1 => days::day01::day01(),
-        _ => println!("Day {} not implemented", args.day),
-    }
+    let result = match args.day {
+        1 => days::day01::run(),
+        _ => {
+            println!("Day {} not implemented", args.day);
+            -1
+        }
+    };
+
+    println!("Result for day {}: {}", args.day, result);
 }
