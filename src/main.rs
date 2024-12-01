@@ -12,13 +12,8 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let result = match args.day {
+    match args.day {
         1 => days::day01::run(),
-        _ => {
-            println!("Day {} not implemented", args.day);
-            -1
-        }
+        _ => println!("Day {} not implemented", args.day)
     };
-
-    println!("Result for day {}: {}", args.day, result);
 }
