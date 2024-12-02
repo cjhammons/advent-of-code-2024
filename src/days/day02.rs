@@ -27,26 +27,33 @@ fn part1(file_name: String) -> i32 {
 
 fn is_safe(nums: &Vec<i32>) -> bool {
     let mut increasing: Option<bool> = None; 
-
     for (i, _) in nums.iter().enumerate() {
         if i + 1 >= nums.len() {
             break;
         }
 
-        let sum = nums[i] - nums[i+1];
+        let diff = nums[i+1] - nums[i];
+
+        if diff == 0 {
+            return false;
+        }
+
+        // Set direction on first difference
         if increasing.is_none() {
-            if sum > 0 {
-                increasing = Some(true);
-            } else {
-                increasing = Some(false);
+            increasing = Some(diff > 0);
+            if diff.abs() > 3 {
+                return false;
             }
+            continue;
         }
-        if sum < 0 && !increasing.unwrap() {
-            return false
-        } else if sum > 0 && increasing.unwrap() {
-            return false
+
+        // Check if direction matches established pattern
+        if (diff > 0) != increasing.unwrap() {
+            return false;
         }
-        if sum.abs() > 2 {
+
+        // Check if difference is in acceptable range
+        if diff.abs() > 3 || diff.abs() < 1  {
             return false
         }
     }
