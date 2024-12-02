@@ -14,6 +14,7 @@ fn main() {
     let args = Args::parse();
     match args.day {
         1 => days::day01::run(),
+        2 => days::day02::run(),
         _ => println!("Day {} not implemented", args.day)
     };
 }
