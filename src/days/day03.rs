@@ -1,4 +1,3 @@
-use clap::builder::Str;
 use regex::Regex;
 
 pub fn run() {
@@ -8,6 +7,7 @@ pub fn run() {
 }
 
 const MUL_REGEX: &str = r"mul\((-?\d+),(-?\d+)\)";
+const MUL_DO_DONT_REGEX: &str = r"mul\((-?\d+),(-?\d+)\)|do\(\)|don't\(\)";
 
 fn part1(file_name: String) -> i32 {
     let input = read_file(file_name);
@@ -20,7 +20,23 @@ fn part1(file_name: String) -> i32 {
 }
 
 fn part2(file_name: String) -> i32 {
-    0
+    let input = read_file(file_name);
+    let matches = extract_matches(&input, MUL_DO_DONT_REGEX).unwrap();
+
+    let mut total = 0;  
+    let mut enabled = true;
+    for m in matches {
+       if m == "do()".to_string() {
+           enabled = true;
+       } else if m == "don't()".to_string() {
+           enabled = false;
+       } else {
+           if enabled {
+               total += parse_and_multiply(&m);
+           }
+       }
+    }
+    return total
 }
 
 fn read_file(file_name: String) -> String{
@@ -50,5 +66,11 @@ mod tests {
     fn test_part1_with_example() {
         let solution = part1("src/inputs/day03_test.txt".to_string());
         assert_eq!(solution, 161);
+    }
+
+    #[test]
+    fn test_part2_with_example() {
+        let solution = part2("src/inputs/day03_test_2.txt".to_string());
+        assert_eq!(solution, 48);
     }
 }
