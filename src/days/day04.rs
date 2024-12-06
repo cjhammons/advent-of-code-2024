@@ -79,7 +79,24 @@ fn part2(file_name: String) -> i32 {
     for (i, line) in input.iter().enumerate() {
         for (j, c) in line.iter().enumerate() {
             if *c == 'A' {
-                
+                if i > 0 && i < input.len() - 1 && j > 0 && j < line.len() - 1 {
+                    let top_left = input[i-1][j-1];
+                    let top_right = input[i-1][j+1];
+                    let bottom_left  = input[i+1][j-1];
+                    let bottom_right = input[i+1][j+1];
+
+                    let is_mas = |start: char, end: char| {
+                        (start == 'M' && end == 'S') || (start == 'S' && end == 'M')
+                    };
+
+                    let diagnols = [
+                        (is_mas(top_left, bottom_right) && is_mas(top_right, bottom_left))
+                    ];
+
+                    if diagnols.iter().any(|&valid| valid) {
+                        count += 1;
+                    }
+                }
             }
         }
     }
@@ -116,6 +133,6 @@ mod tests {
     #[test]
     fn test_part2_with_example() {
         let solution = part2("src/inputs/day04_test.txt".to_string());
-        assert_eq!(solution, -1);
+        assert_eq!(solution, 9);
     }
 }
