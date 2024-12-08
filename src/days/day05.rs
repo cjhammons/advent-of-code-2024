@@ -29,9 +29,9 @@ fn both_parts(file_name: String) -> (i32, i32) {
             let midpoint = page_sequence.len() / 2;
             res1 += page_sequence[midpoint];
         } else {
-            let ordered = correct_order(&map, &page_sequence);
-            let midpoint = ordered.len() / 2;
-            res2 += ordered[midpoint];
+            // let ordered = correct_order(&map, &page_sequence);
+            // let midpoint = ordered.len() / 2;
+            // res2 += ordered[midpoint];
         }
     }
 
@@ -42,11 +42,11 @@ fn both_parts(file_name: String) -> (i32, i32) {
 Given a page sequence in the incorrect order, this function returns the sequence sorted so that it 
 follows the rules given in the ordering map.
 */
-fn correct_order(map: &OrderingMap, page_nums: &Vec<i32>) -> Vec<i32> {
+// fn correct_order(map: &OrderingMap, page_nums: &Vec<i32>) -> Vec<i32> {
     
 
-    return page_nums;
-}
+//     return page_nums;
+// }
 
 // Checks each sequence of pages and checks if they follow the rules in the Ordering map
 fn is_valid_sequence(map: &OrderingMap, page_nums: &Vec<i32>) -> bool {
